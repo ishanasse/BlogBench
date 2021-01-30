@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Blog Articles</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <style>
+            input {display: block;}
+            textarea {display: block;}
+        </style>
+    </head>
+    <body>
+        <form method="post">
+            {% csrf_token %}
+            <label for="title">Title: </label>
+            <input id="title" type="text" name="title">
+            <label for="category">Category: </label>
+            <input id="category" type="text" name="category">
+            <label for="author">Author: </label>
+            <input id="author" type="text" name="author">
+            <label for="content">Content: </label>
+            <textarea id="content" name="content" rows="4" cols="50"> </textarea>
+            <input type="submit" value="Create Article">
+        </form>
+        <ul>
+            {% for article in articles %}
+            <li>
+                <p>Title : {{article.title}}</p>
+                <p>Category: {{article.category}}</p>
+                <p>Author: {{article.author}}</p>
+                <p>Created: {{article.created_at}}</p>
+                <p>Content: {{article.content}}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        <script src="" async defer></script>
+    </body>
+</html>
