@@ -18,43 +18,37 @@
                 BlogBench
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <a class="nav-item nav-link active" href="/accounts/logged_in">Home <span class="sr-only">(current)</span></a>
-                <a class="btn btn-outline-secondary" href="/articles/add_article">Add Article</a>
-              <div class="navbar-nav ml-auto">
+                <a class="btn btn-outline-secondary" href="/articles/">All articles</a>
+            <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link active" style="color:blue;">Hello {{request.user.username}}!<span class="sr-only">(current)</span></a>
                 <a class="btn btn-outline-info" href="/accounts/logout">Log Out</a>
-              </div>
+            </div>
             </div>
         </nav>
-        <div class="col-md-2 mx-auto">
-            <br><h4 style="color:green;"> List of all Articles </h4>
-        </div>
-        <div class="row mx-auto">
-            <div class="col">Tittle</div>
-            <div class="col text-center">Category</div>
-            <div class="col text-right">Published date</div>
-        </div>
-        <div class="list-group">
-            {% for article in articles %}
-            <li>
-                <a href="/articles/" class="list-group-item list-group-item-secondary">
-                    <img class="img-fluid" src="{% static 'bloglogo.svg' %}" width="20" height="20" alt="">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">{{article.title}}</h5>
-                      <small>{{article.category}}</small>
-                      <small>Published {{article.created_at}}</small>
-                    </div>
-                    <p>{{article.content}}</p>
-                    <small>Author: {{article.author}}</small>
-                </a>
-            </li>
-            {% endfor %}
-        </div>
-        <nav class="navbar sticky-bottom navbar-light" style="background-color: #e3f2fd;">
-            <label class="ml-auto"> CONTACT US <br> Email : help@blogbench.com Phone : 18188881111 Ext xyz</label>
-        </nav>
+        {% load crispy_forms_tags %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-row my-auto">
+                <div class="col-md-6 mx-auto">
+                    <br><br><h4 style="color:green;"> Create an Article </h4>
+                    <div class="col-xs-4">
+                        <label for="title">Title: </label>
+                        <input id="title" type="text" class="form-control" name="title">
+                        <label for="category">Category: </label>
+                        <input id="category" type="text" class="form-control" name="category">
+                        <label for="content">Content: </label>
+                        <textarea id="content" name="content" class="form-control" rows="6" cols="200"> </textarea>
+                        <br>
+                        <input type="submit" value="Create Article" class="btn btn-success form-control">
+                    </div> 
+                </div>
+                <nav class="navbar fixed-bottom navbar-light" style="background-color: #e3f2fd;">
+                    <label class="ml-auto"> CONTACT US <br> Email : help@blogbench.com Phone : 18188881111 Ext xyz</label>
+                </nav>
+            </div>
+        </form>
     </body>
 </html>

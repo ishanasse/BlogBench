@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import Home, Article
+from .views import Home, Article, AddArticle
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('', Home.as_view()),
     path('articles/', login_required(Article.as_view())),
+    path('articles/add_article', login_required(AddArticle.as_view())),
 ]

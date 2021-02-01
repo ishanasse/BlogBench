@@ -9,10 +9,9 @@ from django.contrib import messages
 
 # Create your views here.
 
-# def login:
-
 
 class Home(View):
+
     def get(self, request):
         articles = ArticleModel.objects.all()
         return render(request, "home.html", {"articles":articles})
@@ -21,16 +20,13 @@ class Home(View):
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
-
         user = auth.authenticate(username=username, password=password)
         
-        print("logged in")
-
         if user is not None:
             auth.login(request, user)
             return redirect('/articles/')
         else:
-            messages.info(request, 'invalid credentials')
+            messages.warning(request, 'invalid credentials')
             return redirect('/')
 
 
@@ -39,11 +35,19 @@ class Article(View):
         articles = ArticleModel.objects.all()
         return render(request, "article.html", {"articles":articles})
 
+
+class AddArticle(View):
+
+    def get(self, request):
+        articles = ArticleModel.objects.all()
+        return render(request, "add_article.html")
+
     def post(self, request):
         title = request.POST["title"]
         category = request.POST["category"]
-        author = request.POST["author"]
+        #author = request.POST["author"]
+        author = request.user
         content = request.POST["content"]
         
-        ArticleModel.objects.create(title = title, category=category.upper(), author=author, content=content, created_at=datetime.now(tz=timezone.utc))
-        return redirect("/articles/")
+        ArticleModel.objects.create(title = title, category=category.upper(), author=author, content=content, created_at=datetime.now())
+        return redirect("/articles/") 

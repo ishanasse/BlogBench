@@ -3,6 +3,8 @@ from django.contrib.auth.models import User, auth
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from .forms import UserRegisterForm
+from blog.models import ArticleModel
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -15,10 +17,21 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
-            
             return redirect('/')
+
     else:
-        form = UserRegisterForm()
-    
+        form = UserRegisterForm()    
     return render(request, "register.html", {'form':form})
 
+
+def logout(request):
+
+    auth.logout(request)
+    messages.info(request, 'You have been logged out.')
+    return redirect('/')
+
+
+@login_required
+def logged_in(request):
+        articles = ArticleModel.objects.all()
+        return render(request, "logged_in.html", {"articles":articles})   

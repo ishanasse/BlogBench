@@ -25,8 +25,8 @@ SECRET_KEY = 'cx(x8(e!5_!x)+m*num!%mboh@mcl#9i&$inoozpcfl_u3x&^h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.2.73']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
